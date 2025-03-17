@@ -1,26 +1,25 @@
-use num::complex::Complex;    // <1>
+use num::complex::Complex;    
 
-fn calculate_mandelbrot(      // <2>
+fn calculate_mandelbrot(      
 
-  max_iters: usize,           // <3>
-  x_min: f64,                 // <4>
-  x_max: f64,                 // <4>
-  y_min: f64,                 // <4>
-  y_max: f64,                 // <4>
-  width: usize,               // <5>
-  height: usize,              // <5>
+  max_iters: usize,          
+  x_min: f64,               
+  x_max: f64,               
+  y_min: f64,               
+  y_max: f64,                 
+  width: usize,               
+  height: usize,              
   ) -> Vec<Vec<usize>> {
 
-  let mut rows: Vec<_> = Vec::with_capacity(width); // <6>
-  for img_y in 0..height {                          // <7>
-
+  let mut rows: Vec<_> = Vec::with_capacity(width); 
+  for img_y in 0..height {                          
     let mut row: Vec<usize> = Vec::with_capacity(height);
     for img_x in 0..width {
 
       let x_percent = (img_x as f64 / width as f64);
       let y_percent = (img_y as f64 / height as f64);
-      let cx = x_min + (x_max - x_min) * x_percent; // <8>
-      let cy = y_min + (y_max - y_min) * y_percent; // <8>
+      let cx = x_min + (x_max - x_min) * x_percent; 
+      let cy = y_min + (y_max - y_min) * y_percent; 
       let escaped_at = mandelbrot_at_point(cx, cy, max_iters);
       row.push(escaped_at);
     }
@@ -30,21 +29,21 @@ fn calculate_mandelbrot(      // <2>
   rows
 }
 
-fn mandelbrot_at_point(   // <9>
+fn mandelbrot_at_point(   
   cx: f64,
   cy: f64,
   max_iters: usize,
   ) -> usize {
-  let mut z = Complex { re: 0.0, im: 0.0 };       // <10>
-  let c = Complex::new(cx, cy);                   // <11>
+  let mut z = Complex { re: 0.0, im: 0.0 };       
+  let c = Complex::new(cx, cy);                  
 
   for i in 0..=max_iters {
-    if z.norm() > 2.0 {                           // <12>
+    if z.norm() > 2.0 {                          
       return i;
     }
-    z = z * z + c;                                // <13>
+    z = z * z + c;                              
   }
-  max_iters                                       // <14>
+  max_iters                                   
 }
 
 fn render_mandelbrot(escape_vals: Vec<Vec<usize>>) {
